@@ -13,6 +13,7 @@ namespace ExploreCalifornia.Controllers
     public class ToursController : Controller
     {
         private readonly ExploreCaliforniaContext _context;
+
         private TourGateway tourGateway = new TourGateway();
 
         public ToursController(ExploreCaliforniaContext context)
@@ -20,8 +21,7 @@ namespace ExploreCalifornia.Controllers
             _context = context;
         }
 
-        // GET: Tours
-        public async Task<IActionResult> Index()
+        public ActionResult Index()
         {
             return View(tourGateway.SelectAll());
         }
@@ -50,6 +50,23 @@ namespace ExploreCalifornia.Controllers
             return View();
         }
 
+        public async Task<IActionResult> Confirm (int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tour = await _context.Tour.FirstOrDefaultAsync(m => m.Id == id);
+
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            return View(tour);
+        }
+
         // POST: Tours/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -63,24 +80,8 @@ namespace ExploreCalifornia.Controllers
                 await _context.SaveChangesAsync();
 
                 var newlyCreatedId = tour.Id;
-                return RedirectToAction(nameof(Confirm), new { id = newlyCreatedId});
+                return RedirectToAction(nameof(Confirm), new { id = newlyCreatedId });
             }
-            return View(tour);
-        }
-
-        public async Task<ActionResult> Confirm (int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var tour = await _context.Tour.FirstOrDefaultAsync(m => m.Id == id);
-            if (tour == null)
-            {
-                return NotFound();
-            }
-
             return View(tour);
         }
 

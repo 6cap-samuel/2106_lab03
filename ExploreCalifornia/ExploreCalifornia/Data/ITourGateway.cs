@@ -6,22 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExploreCalifornia.Data
 {
-    interface ITourGateway
-    {
-        IEnumerable<Tour> SelectAll();
-
-        Tour SelectById(int? id);
-
-        void Insert(Tour tour);
-
-        void update(Tour tour);
-
-        Tour Delete(int? id);
-
-        void Save();
-    }
-
-    public class TourGateway : ITourGateway
+    public class DataGateway
     {
         internal ExploreCaliforniaContext db = new ExploreCaliforniaContext();
 
@@ -47,7 +32,6 @@ namespace ExploreCalifornia.Data
         public IEnumerable<Tour> SelectAll()
         {
             return db.Tour.ToArray();
-
         }
 
         public Tour SelectById(int? id)
@@ -55,10 +39,28 @@ namespace ExploreCalifornia.Data
             return db.Tour.Find(id);
         }
 
-        public void update(Tour tour)
+        public void Update(Tour tour)
         {
             db.Tour.Update(tour);
             db.SaveChanges();
+        }
+    }
+
+    public class TourGateway : DataGateway
+    {
+        public IEnumerable<Tour> findWithinRange(int id)
+        {
+            IEnumerable<Tour> tourList;
+
+            if (id == 1)
+           {
+                return SelectAll();
+           } else if (id == 2)
+           {
+
+           }
+
+            return tourList;
         }
     }
 }

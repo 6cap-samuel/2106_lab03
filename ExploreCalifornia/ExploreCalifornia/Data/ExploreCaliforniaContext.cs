@@ -18,5 +18,13 @@ namespace ExploreCalifornia.Models
         }
 
         public DbSet<ExploreCalifornia.Models.Tour> Tour { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=ExploreCaliforniaContext-fa2ef66e-f0c9-438f-b64b-78bf49c8b6c8;Trusted_Connection=True;MultipleActiveResultSets=true");
+            }
+        }
     }
 }

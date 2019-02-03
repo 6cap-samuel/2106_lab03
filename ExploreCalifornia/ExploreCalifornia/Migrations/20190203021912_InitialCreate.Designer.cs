@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExploreCalifornia.Migrations
 {
     [DbContext(typeof(ExploreCaliforniaContext))]
-    [Migration("20190202042025_InitialCreate")]
+    [Migration("20190203021912_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
